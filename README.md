@@ -1,9 +1,22 @@
-# README
+# MasterOutput - frontend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a project originally done for a project in Flatiron bootcamp. I plan on keeping and increasing development if the interest in the project is there. If you would like to contribute, please consider submitting a pull request(more info below).
 
-Things you may want to cover:
+## Contributors
+
+
+## Dependencies 
+
+## Ruby version
+
+## Database
+
+Postgres
+
+## instructions
+
+
+## things to include
 
 * Ruby version
 
