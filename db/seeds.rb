@@ -28,3 +28,4 @@ user_question1 = UserQuestion.create(user_id: user1.id, question_id: question1.i
 tag1 = Tag.create(name: "c")
 
 question_tag1 = QuestionTag.create(tag_id: tag1.id, question_id: question1.id )
+
