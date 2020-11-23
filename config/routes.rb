@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  get "/questions/random10", to: "questions#random10"
+  
   resources :questions
   resources :tags
   resources :users

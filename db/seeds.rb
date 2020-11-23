@@ -21,7 +21,7 @@ advanced_level = Level.create(name: "advanced")
 
 user1 = User.create(username: "new_username", level_id: new_user_level.id, password: "password")
 
-question1 = Question.create(answer: "c4", level_id: new_user_level.id)
+question1 = Question.create(answer: "c", level_id: new_user_level.id, note: "c4")
 
 user_question1 = UserQuestion.create(user_id: user1.id, question_id: question1.id, status: 0)
 
