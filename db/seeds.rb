@@ -19,41 +19,64 @@ beginner_level = Level.create(name: "beginner")
 intermediate_level = Level.create(name: "intermediate")
 advanced_level = Level.create(name: "advanced")
 
-user1 = User.create(username: "new_username", level_id: new_user_level.id, password: "password")
+user1 = User.create(username: "test", level_id: new_user_level.id, password: "test")
 
-question1 = Question.create(answer: "c", level_id: new_user_level.id, note: JSON.unparse("c4"))
 
-user_question1 = UserQuestion.create(user_id: user1.id, question_id: question1.id, status: 0)
+# tag1 = Tag.create(name: "c")
+tag2 = Tag.create(name: "notes")
+tag3 = Tag.create(name: "chords")
 
-tag1 = Tag.create(name: "c")
-
-question_tag1 = QuestionTag.create(tag_id: tag1.id, question_id: question1.id )
+# question_tag1 = QuestionTag.create(tag_id: tag1.id, question_id: question1.id )
 
 arr1 = ["a3", "b3", "c3", "d3", "e3", "f3", "g3"]
 arr2 = ["a4", "b4", "c4", "d4", "e4", "f4", "g4"]
 arr3 = ["a5", "b5", "c5", "d5", "e5", "f5", "g5"]
 
+multi_note = ["a","b","c","d","e","f", "g"]
+
 arr1.each do |note|
-    Question.create(answer: note[0], level_id: new_user_level.id, note: JSON.unparse(note))
+    q = Question.create(answer: note[0], level_id: new_user_level.id, note: JSON.unparse(note), multipleChoice: JSON.unparse(multi_note.sample(4)))
+    question_tag2 = QuestionTag.create(tag_id: tag2.id, question_id: q.id )
+
 end
 arr2.each do |note|
-    Question.create(answer: note[0], level_id: new_user_level.id, note: JSON.unparse(note))
+    q = Question.create(answer: note[0], level_id: new_user_level.id, note: JSON.unparse(note), multipleChoice: JSON.unparse(multi_note.sample(4)))
+    question_tag2 = QuestionTag.create(tag_id: tag2.id, question_id: q.id )
+
 end
 arr3.each do |note|
-    Question.create(answer: note[0], level_id: new_user_level.id, note: JSON.unparse(note))
+    q = Question.create(answer: note[0], level_id: new_user_level.id, note: JSON.unparse(note), multipleChoice: JSON.unparse(multi_note.sample(4)))
+    question_tag2 = QuestionTag.create(tag_id: tag2.id, question_id: q.id )
+
 end
+
 
 arr1 = [[["a2", "c#3", "e3"],"aM"], [["b2","d#3", "f#3"],"bM"], [["c3", "e3", "g3"],"cM"], [["d3", "f#3", "a3"],"dM"], [["e3", "g#3", "b3"],"eM"], [["f3", "a3", "c4"],"fM"], [["g3", "b3", "d4"],"gM"]]
 arr2 = [[["a3", "c#4", "e4"],"aM"], [["b3","d#4", "f#4"],"bM"], [["c4", "e4", "g4"],"cM"], [["d4", "f#4", "a4"],"dM"], [["e4", "g#4", "b4"],"eM"], [["f4", "a4", "c4"],"fM"], [["g4", "b4", "d4"],"gM"]]
 arr3 = [[["a4", "c#5", "e5"],"aM"], [["b4","d#5", "f#5"],"bM"], [["c5", "e5", "g5"],"cM"], [["d5", "f#5", "a5"],"dM"], [["e5", "g#5", "b5"],"eM"], [["f5", "a5", "c5"],"fM"], [["g5", "b5", "d5"],"gM"]]
 
+multiChords = ["aM", "bM","cM", "dM","eM", "fM","gM"]
+
+
 arr1.each do |note|
-    Question.create(answer: note[1], level_id: new_user_level.id, note: JSON.unparse(note[0]))
+    arr = multiChords.sample(3) + [note[1]]
+    arr = arr.shuffle
+    q2 = Question.create(answer: note[1], level_id: new_user_level.id, note: JSON.unparse(note[0]), multipleChoice: JSON.unparse(arr) )
+    question_tag3 = QuestionTag.create(tag_id: tag3.id, question_id: q2.id )
+
 end
 arr2.each do |note|
-    Question.create(answer: note[1], level_id: new_user_level.id, note: JSON.unparse(note[0]))
+    arr = multiChords.sample(3) + [note[1]]
+    arr = arr.shuffle
+    q2 = Question.create(answer: note[1], level_id: new_user_level.id, note: JSON.unparse(note[0]), multipleChoice: JSON.unparse(arr))
+    question_tag3 = QuestionTag.create(tag_id: tag3.id, question_id: q2.id )
+
 end
 arr3.each do |note|
-    Question.create(answer: note[1], level_id: new_user_level.id, note: JSON.unparse(note[0]))
+    arr = multiChords.sample(3) + [note[1]]
+    arr = arr.shuffle
+    q2 = Question.create(answer: note[1], level_id: new_user_level.id, note: JSON.unparse(note[0]), multipleChoice: JSON.unparse(arr))
+    question_tag3 = QuestionTag.create(tag_id: tag3.id, question_id: q2.id )
+
 end
 

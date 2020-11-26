@@ -3,6 +3,10 @@ class Question < ApplicationRecord
     has_many :question_tags
     has_many :tags, through: :question_tags
 
+    has_many :user_questions
+    has_many :users, through: :user_questions
+
+
 
     def self.random10
         arr = []
