@@ -15,4 +15,48 @@ class Question < ApplicationRecord
         end
         return arr
     end
+
+    def self.random_chords
+        arr = []
+        10.times do 
+            arr.push(Tag.find_by(name: "chords").questions.all.sample)
+        end
+        return arr
+    end
+
+    def self.random_notes
+        arr = []
+        10.times do 
+            arr.push(Tag.find_by(name: "notes").questions.all.sample)
+        end
+        return arr
+    end
+
+    def self.random_major
+        arr = []
+        10.times do 
+            arr.push(Tag.find_by(name: "major").questions.all.sample)
+        end
+        return arr
+    end
+
+    def self.random_minor
+        arr = []
+        10.times do 
+            arr.push(Tag.find_by(name: "minor").questions.all.sample)
+        end
+        return arr
+    end
+
+    def self.random_custom(tag)
+        arr = []
+        if tag == "random10"
+            return random10
+        else
+            10.times do 
+                arr.push(Tag.find_by(name: tag).questions.all.sample)
+            end
+            return arr
+        end
+    end
 end

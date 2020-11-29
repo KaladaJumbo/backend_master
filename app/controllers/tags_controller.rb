@@ -3,11 +3,12 @@ class TagsController < ApplicationController
     def create 
         arr = []
         params[:wrongAnswers].each {|ans| UserQuestion.create(question_id: ans, user_id: params[:user])}
-
-        arr = User.find(params[:user]).weaknesses
+        user = User.find(params[:user])
+        arr = user.weaknesses
 
         render json: {
             auth: true,
+            user: user,
             tags: arr,
         }
         
