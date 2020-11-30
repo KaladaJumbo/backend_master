@@ -35,7 +35,18 @@ class QuestionsController < ApplicationController
             question.multipleChoice = JSON.parse(question.multipleChoice)
         end
         
-
         render json: rand10_arr.to_json()
     end
+
+    def random_with_tags
+        rand10_arr = Question.random_with_tags(params[:tags])
+
+        rand10_arr.each do |question|
+            question.note = JSON.parse(question.note)
+            question.multipleChoice = JSON.parse(question.multipleChoice)
+        end
+        
+        render json: rand10_arr.to_json()
+    end
+
 end

@@ -59,4 +59,20 @@ class Question < ApplicationRecord
             return arr
         end
     end
+
+    def self.random_with_tags(tags)
+        arr = []
+        # byebug
+        tags.each do |tag|
+            tag = Tag.find(tag["id"])
+            question = tag.questions.all.sample
+            arr.push(question)
+        end
+        while (arr.length < 10)
+            arr.push(Question.all.sample)
+        end
+        arr = arr.shuffle
+        return arr
+    end
+
 end

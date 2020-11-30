@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get "/questions/random10", to: "questions#random10"
   get "/questions/chords", to: "questions#random_chords"
   get "/questions/custom/:tag", to: "questions#random_custom"
+  post "/questions/randomwithtags", to: "questions#random_with_tags"
   post "/login", to: "users#login"
   get "/login/user", to: "users#show"
   
