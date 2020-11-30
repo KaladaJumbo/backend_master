@@ -27,9 +27,11 @@ multi_note = ["a","b","c","d","e","f","g"]
 multi_note.each {|note| Tag.create(name: note)}
 tag2 = Tag.create(name: "notes")
 tag3 = Tag.create(name: "chords")
+scales = Tag.create(name: "scales")
 major = Tag.create(name: "major")
 minor = Tag.create(name: "minor")
 majorvsminor = Tag.create(name: "major vs minor")
+pro = Tag.create(name: "progressions")
 
 
 #question creation 
@@ -38,7 +40,7 @@ arr1 = ["a3", "b3", "c3", "d3", "e3", "f3", "g3"]
 arr2 = ["a4", "b4", "c4", "d4", "e4", "f4", "g4"]
 arr3 = ["a5", "b5", "c5", "d5", "e5", "f5", "g5"]
 
-
+#notes
 arr1.each do |note|
     q = Question.create(answer: note[0], level_id: new_user_level.id, note: JSON.unparse(note), multipleChoice: JSON.unparse(multi_note.sample(4)))
     QuestionTag.create(tag_id: tag2.id, question_id: q.id)
@@ -61,6 +63,7 @@ arr3.each do |note|
 
 end
 
+#chords
 
 arr1 = [[["ab2", "c3", "eb3"],"abM"], [["a2", "c#3", "e3"],"aM"], [["bb2","d3", "f3"],"bbM"], [["b2","d#3", "f#3"],"bM"], [["cb3", "eb3", "gb3"],"cbM"], [["c3", "e3", "g3"],"cM"], [["c#3", "e#3", "g#3"],"c#M"], [["db3", "f3", "ab3"],"dbM"], [["d3", "f#3", "a3"],"dM"], [["eb3", "g3", "bb3"],"ebM"], [["e3", "g#3", "b3"],"eM"], [["fb3", "ab3", "cb4"],"fbM"], [["f3", "a3", "c4"],"fM"], [["f#3", "a#3", "c#4"],"f#M"], [["gb3", "bb3", "db4"],"gbM"],[["g3", "b3", "d4"],"gM"],[["g#3", "b#3", "d#4"],"g#M"]]
 arr2 = [[["ab3", "c4", "eb4"],"abM"], [["a3", "c#4", "e4"],"aM"], [["bb3","d4", "f4"],"bbM"], [["b3","d#4", "f#4"],"bM"], [["cb4", "eb4", "gb4"],"cbM"], [["c4", "e4", "g4"],"cM"], [["c#4", "e#4", "g#4"],"c#M"], [["db4", "f4", "ab4"],"dbM"], [["d4", "f#4", "a4"],"dM"], [["eb4", "g4", "bb4"],"ebM"], [["e4", "g#4", "b4"],"eM"], [["fb4", "ab4", "cb5"],"fbM"], [["f4", "a4", "c5"],"fM"], [["f#4", "a#4", "c#5"],"f#M"], [["gb4", "bb4", "db5"],"gbM"],[["g4", "b4", "d5"],"gM"],[["g#4", "b#4", "d#5"],"g#M"]]
@@ -68,6 +71,8 @@ arr3 = [[["ab4", "c5", "eb5"],"abM"], [["a4", "c#5", "e5"],"aM"], [["bb4","d5", 
 
 multiChords = ["aM", "abM", "bbM", "bM", "cbM", "cM", "c#M", "dbM", "dM", "ebM", "eM", "fbM", "fM", "f#M", "gbM", "gM", "g#M", "am", "abm", "bbm", "bm", "cm", "c#m", "dm", "ebm", "em", "fm", "f#m", "gm"]
 mvmanswers = ["Major(M)", "Minor(m)"]
+maj_ans = "Major(M)"
+min_ans = "Minor(m)"
 
 def multipleSelector(arr, ans, num)
     multi_choice_ans_arr = [ans]
@@ -174,8 +179,306 @@ arr6.each do |note|
 
 end
 
-arr = multipleSelector(multi_note, "c", 4)
+#scales
+major_multi_scale = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"]
+arr = multipleSelector(major_multi_scale, "c", 4)
 
 q = Question.create(answer: "c", level_id: new_user_level.id, note: JSON.unparse(["c4", "d4", "e4", "f4", "g4", "a4", "b4", "c5"]), multipleChoice: JSON.unparse(arr))
-t = Tag.create(name: "scales")
-QuestionTag.create(tag_id: t.id, question_id: q.id )
+q2 = Question.create(answer: "c", level_id: new_user_level.id, note: JSON.unparse(["c3", "d3", "e3", "f3", "g3", "a3", "b3", "c4"]), multipleChoice: JSON.unparse(arr))
+q3 = Question.create(answer: "c", level_id: new_user_level.id, note: JSON.unparse(["c2", "d2", "e2", "f2", "g2", "a2", "b2", "c3"]), multipleChoice: JSON.unparse(arr))
+QuestionTag.create(tag_id: scales.id, question_id: q.id )
+QuestionTag.create(tag_id: scales.id, question_id: q2.id )
+QuestionTag.create(tag_id: scales.id, question_id: q3.id )
+QuestionTag.create(tag_id: major.id, question_id: q.id )
+QuestionTag.create(tag_id: major.id, question_id: q2.id )
+QuestionTag.create(tag_id: major.id, question_id: q3.id )
+
+qMvM = Question.create(answer: maj_ans, level_id: new_user_level.id, note: JSON.unparse(["c2", "d2", "e2", "f2", "g2", "a2", "b2", "c3"]), multipleChoice: JSON.unparse(mvmanswers) )
+QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: major.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+
+
+arr = multipleSelector(major_multi_scale, "c#", 4)
+
+q = Question.create(answer: "c#", level_id: new_user_level.id, note: JSON.unparse(["C#4", "D#4", "F4", "F#4", "G#4", "A#4", "B#4", "C#5"]), multipleChoice: JSON.unparse(arr))
+q2 = Question.create(answer: "c#", level_id: new_user_level.id, note: JSON.unparse(["C#3", "D#3", "F3", "F#3", "G#3", "A#3", "B#3", "C#4"]), multipleChoice: JSON.unparse(arr))
+q3 = Question.create(answer: "c#", level_id: new_user_level.id, note: JSON.unparse(["C#2", "D#2", "F2", "F#2", "G#2", "A#2", "B#2", "C#3"]), multipleChoice: JSON.unparse(arr))
+QuestionTag.create(tag_id: scales.id, question_id: q.id )
+QuestionTag.create(tag_id: scales.id, question_id: q2.id )
+QuestionTag.create(tag_id: scales.id, question_id: q3.id )
+QuestionTag.create(tag_id: major.id, question_id: q.id )
+QuestionTag.create(tag_id: major.id, question_id: q2.id )
+QuestionTag.create(tag_id: major.id, question_id: q3.id )
+
+qMvM = Question.create(answer: maj_ans, level_id: new_user_level.id, note: JSON.unparse(["C#2", "D#2", "F2", "F#2", "G#2", "A#2", "B#2", "C#3"]), multipleChoice: JSON.unparse(mvmanswers) )
+QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: major.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+
+
+arr = multipleSelector(major_multi_scale, "d", 4)
+
+q = Question.create(answer: "d", level_id: new_user_level.id, note: JSON.unparse(["D4", "E4", "F#4", "G4", "A4", "B4", "C#5", "D5"]), multipleChoice: JSON.unparse(arr))
+q2 = Question.create(answer: "d", level_id: new_user_level.id, note: JSON.unparse(["D3", "E3", "F#3", "G3", "A3", "B3", "C#4", "D4"]), multipleChoice: JSON.unparse(arr))
+q3 = Question.create(answer: "d", level_id: new_user_level.id, note: JSON.unparse(["D2", "E2", "F#2", "G2", "A2", "B2", "C#3", "D3"]), multipleChoice: JSON.unparse(arr))
+QuestionTag.create(tag_id: scales.id, question_id: q.id )
+QuestionTag.create(tag_id: scales.id, question_id: q2.id )
+QuestionTag.create(tag_id: scales.id, question_id: q3.id )
+QuestionTag.create(tag_id: major.id, question_id: q.id )
+QuestionTag.create(tag_id: major.id, question_id: q2.id )
+QuestionTag.create(tag_id: major.id, question_id: q3.id )
+
+qMvM = Question.create(answer: maj_ans, level_id: new_user_level.id, note: JSON.unparse(["D2", "E2", "F#2", "G2", "A2", "B2", "C#3", "D3"]), multipleChoice: JSON.unparse(mvmanswers) )
+QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: major.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+
+
+arr = multipleSelector(major_multi_scale, "d#", 4)
+
+q = Question.create(answer: "d#", level_id: new_user_level.id, note: JSON.unparse(["D#4", "F4", "G4", "G#4", "A#4", "C5", "D5", "D#5"]), multipleChoice: JSON.unparse(arr))
+q2 = Question.create(answer: "d#", level_id: new_user_level.id, note: JSON.unparse(["D#3", "F3", "G3", "G#3", "A#3", "C4", "D4", "D#4"]), multipleChoice: JSON.unparse(arr))
+q3 = Question.create(answer: "d#", level_id: new_user_level.id, note: JSON.unparse(["D#2", "F2", "G2", "G#2", "A#2", "C3", "D3", "D#3"]), multipleChoice: JSON.unparse(arr))
+QuestionTag.create(tag_id: scales.id, question_id: q.id )
+QuestionTag.create(tag_id: scales.id, question_id: q2.id )
+QuestionTag.create(tag_id: scales.id, question_id: q3.id )
+QuestionTag.create(tag_id: major.id, question_id: q.id )
+QuestionTag.create(tag_id: major.id, question_id: q2.id )
+QuestionTag.create(tag_id: major.id, question_id: q3.id )
+
+qMvM = Question.create(answer: maj_ans, level_id: new_user_level.id, note: JSON.unparse(["D#2", "F2", "G2", "G#2", "A#2", "C3", "D3", "D#3"]), multipleChoice: JSON.unparse(mvmanswers) )
+QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: major.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+
+
+arr = multipleSelector(major_multi_scale, "e", 4)
+
+q = Question.create(answer: "e", level_id: new_user_level.id, note: JSON.unparse(["E4", "F#4", "G#4", "A4", "B4", "C#5", "D#5", "E5"]), multipleChoice: JSON.unparse(arr))
+q2 = Question.create(answer: "e", level_id: new_user_level.id, note: JSON.unparse(["E3", "F#3", "G#3", "A3", "B3", "C#4", "D#4", "E4"]), multipleChoice: JSON.unparse(arr))
+q3 = Question.create(answer: "e", level_id: new_user_level.id, note: JSON.unparse(["E2", "F#2", "G#2", "A2", "B2", "C#3", "D#3", "E3"]), multipleChoice: JSON.unparse(arr))
+QuestionTag.create(tag_id: scales.id, question_id: q.id )
+QuestionTag.create(tag_id: scales.id, question_id: q2.id )
+QuestionTag.create(tag_id: scales.id, question_id: q3.id )
+QuestionTag.create(tag_id: major.id, question_id: q.id )
+QuestionTag.create(tag_id: major.id, question_id: q2.id )
+QuestionTag.create(tag_id: major.id, question_id: q3.id )
+
+qMvM = Question.create(answer: maj_ans, level_id: new_user_level.id, note: JSON.unparse(["E2", "F#2", "G#2", "A2", "B2", "C#3", "D#3", "E3"]), multipleChoice: JSON.unparse(mvmanswers) )
+QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: major.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+
+arr = multipleSelector(major_multi_scale, "f", 4)
+
+q = Question.create(answer: "f", level_id: new_user_level.id, note: JSON.unparse(["F4", "G4", "A4", "Bb4", "C5", "D5", "E5", "F5"]), multipleChoice: JSON.unparse(arr))
+q2 = Question.create(answer: "f", level_id: new_user_level.id, note: JSON.unparse(["F3", "G3", "A3", "Bb3", "C4", "D4", "E4", "F4"]), multipleChoice: JSON.unparse(arr))
+q3 = Question.create(answer: "f", level_id: new_user_level.id, note: JSON.unparse(["F2", "G2", "A2", "Bb2", "C3", "D3", "E3", "F3"]), multipleChoice: JSON.unparse(arr))
+QuestionTag.create(tag_id: scales.id, question_id: q.id )
+QuestionTag.create(tag_id: scales.id, question_id: q2.id )
+QuestionTag.create(tag_id: scales.id, question_id: q3.id )
+QuestionTag.create(tag_id: major.id, question_id: q.id )
+QuestionTag.create(tag_id: major.id, question_id: q2.id )
+QuestionTag.create(tag_id: major.id, question_id: q3.id )
+
+qMvM = Question.create(answer: maj_ans, level_id: new_user_level.id, note: JSON.unparse(["F2", "G2", "A2", "Bb2", "C3", "D3", "E3", "F3"]), multipleChoice: JSON.unparse(mvmanswers) )
+QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: major.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+
+
+arr = multipleSelector(major_multi_scale, "f#", 4)
+
+q = Question.create(answer: "f#", level_id: new_user_level.id, note: JSON.unparse(["F#4", "G#4", "A#4", "B4", "C#5", "D#5", "E#5", "F#5"]), multipleChoice: JSON.unparse(arr))
+q2 = Question.create(answer: "f#", level_id: new_user_level.id, note: JSON.unparse(["F#3", "G#3", "A#3", "B3", "C#4", "D#4", "E#4", "F#4"]), multipleChoice: JSON.unparse(arr))
+q3 = Question.create(answer: "f#", level_id: new_user_level.id, note: JSON.unparse(["F#2", "G#2", "A#2", "B2", "C#3", "D#3", "E#3", "F#3"]), multipleChoice: JSON.unparse(arr))
+QuestionTag.create(tag_id: scales.id, question_id: q.id )
+QuestionTag.create(tag_id: scales.id, question_id: q2.id )
+QuestionTag.create(tag_id: scales.id, question_id: q3.id )
+QuestionTag.create(tag_id: major.id, question_id: q.id )
+QuestionTag.create(tag_id: major.id, question_id: q2.id )
+QuestionTag.create(tag_id: major.id, question_id: q3.id )
+
+qMvM = Question.create(answer: maj_ans, level_id: new_user_level.id, note: JSON.unparse(["F#2", "G#2", "A#2", "B2", "C#3", "D#3", "E#3", "F#3"]), multipleChoice: JSON.unparse(mvmanswers) )
+QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: major.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+
+
+arr = multipleSelector(major_multi_scale, "g", 4)
+
+q = Question.create(answer: "g", level_id: new_user_level.id, note: JSON.unparse(["G4", "A4", "B4", "C5", "D5", "E5", "F#5", "G5"]), multipleChoice: JSON.unparse(arr))
+q2 = Question.create(answer: "g", level_id: new_user_level.id, note: JSON.unparse(["G3", "A3", "B3", "C4", "D4", "E4", "F#4", "G4"]), multipleChoice: JSON.unparse(arr))
+q3 = Question.create(answer: "g", level_id: new_user_level.id, note: JSON.unparse(["G2", "A2", "B2", "C3", "D3", "E3", "F#3", "G3"]), multipleChoice: JSON.unparse(arr))
+QuestionTag.create(tag_id: scales.id, question_id: q.id )
+QuestionTag.create(tag_id: scales.id, question_id: q2.id )
+QuestionTag.create(tag_id: scales.id, question_id: q3.id )
+QuestionTag.create(tag_id: major.id, question_id: q.id )
+QuestionTag.create(tag_id: major.id, question_id: q2.id )
+QuestionTag.create(tag_id: major.id, question_id: q3.id )
+
+qMvM = Question.create(answer: maj_ans, level_id: new_user_level.id, note: JSON.unparse(["G2", "A2", "B2", "C3", "D3", "E3", "F#3", "G3"]), multipleChoice: JSON.unparse(mvmanswers) )
+QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: major.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+
+
+arr = multipleSelector(major_multi_scale, "g#", 4)
+
+q = Question.create(answer: "g#", level_id: new_user_level.id, note: JSON.unparse(["G#4", "A#4", "B#4", "C#5", "D#5", "E#5", "G5", "G#5"]), multipleChoice: JSON.unparse(arr))
+q2 = Question.create(answer: "g#", level_id: new_user_level.id, note: JSON.unparse(["G#3", "A#3", "B#3", "C#4", "D#4", "E#4", "G4", "G#4"]), multipleChoice: JSON.unparse(arr))
+q3 = Question.create(answer: "g#", level_id: new_user_level.id, note: JSON.unparse(["G#2", "A#2", "B#2", "C#3", "D#3", "E#3", "G3", "G#3"]), multipleChoice: JSON.unparse(arr))
+QuestionTag.create(tag_id: scales.id, question_id: q.id )
+QuestionTag.create(tag_id: scales.id, question_id: q2.id )
+QuestionTag.create(tag_id: scales.id, question_id: q3.id )
+QuestionTag.create(tag_id: major.id, question_id: q.id )
+QuestionTag.create(tag_id: major.id, question_id: q2.id )
+QuestionTag.create(tag_id: major.id, question_id: q3.id )
+
+qMvM = Question.create(answer: maj_ans, level_id: new_user_level.id, note: JSON.unparse(["G#2", "A#2", "B#2", "C#3", "D#3", "E#3", "G3", "G#3"]), multipleChoice: JSON.unparse(mvmanswers) )
+QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: major.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+
+
+arr = multipleSelector(major_multi_scale, "a", 4)
+
+q = Question.create(answer: "a", level_id: new_user_level.id, note: JSON.unparse(["A4", "B4", "C#5", "D5", "E5", "F#5", "G#5", "A5"]), multipleChoice: JSON.unparse(arr))
+q2 = Question.create(answer: "a", level_id: new_user_level.id, note: JSON.unparse(["A3", "B3", "C#4", "D4", "E4", "F#4", "G#4", "A4"]), multipleChoice: JSON.unparse(arr))
+q3 = Question.create(answer: "a", level_id: new_user_level.id, note: JSON.unparse(["A2", "B2", "C#3", "D3", "E3", "F#3", "G#3", "A3"]), multipleChoice: JSON.unparse(arr))
+QuestionTag.create(tag_id: scales.id, question_id: q.id )
+QuestionTag.create(tag_id: scales.id, question_id: q2.id )
+QuestionTag.create(tag_id: scales.id, question_id: q3.id )
+QuestionTag.create(tag_id: major.id, question_id: q.id )
+QuestionTag.create(tag_id: major.id, question_id: q2.id )
+QuestionTag.create(tag_id: major.id, question_id: q3.id )
+
+qMvM = Question.create(answer: maj_ans, level_id: new_user_level.id, note: JSON.unparse(["A2", "B2", "C#3", "D3", "E3", "F#3", "G#3", "A3"]), multipleChoice: JSON.unparse(mvmanswers) )
+QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: major.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+
+
+arr = multipleSelector(major_multi_scale, "a#", 4)
+
+q = Question.create(answer: "a#", level_id: new_user_level.id, note: JSON.unparse(["A#4", "C5", "D5", "D#5", "F5", "G5", "A5", "A#5"]), multipleChoice: JSON.unparse(arr))
+q2 = Question.create(answer: "a#", level_id: new_user_level.id, note: JSON.unparse(["A#3", "C4", "D4", "D#4", "F4", "G4", "A4", "A#4"]), multipleChoice: JSON.unparse(arr))
+q3 = Question.create(answer: "a#", level_id: new_user_level.id, note: JSON.unparse(["A#2", "C3", "D3", "D#3", "F3", "G3", "A3", "A#3"]), multipleChoice: JSON.unparse(arr))
+QuestionTag.create(tag_id: scales.id, question_id: q.id )
+QuestionTag.create(tag_id: scales.id, question_id: q2.id )
+QuestionTag.create(tag_id: scales.id, question_id: q3.id )
+QuestionTag.create(tag_id: major.id, question_id: q.id )
+QuestionTag.create(tag_id: major.id, question_id: q2.id )
+QuestionTag.create(tag_id: major.id, question_id: q3.id )
+
+qMvM = Question.create(answer: maj_ans, level_id: new_user_level.id, note: JSON.unparse(["A#2", "C3", "D3", "D#3", "F3", "G3", "A3", "A#3"]), multipleChoice: JSON.unparse(mvmanswers) )
+QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: major.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+
+
+arr = multipleSelector(major_multi_scale, "b", 4)
+
+q = Question.create(answer: "b", level_id: new_user_level.id, note: JSON.unparse(["B4", "C#5", "D#5", "E5", "F#5", "G#5", "A#5", "B5"]), multipleChoice: JSON.unparse(arr))
+q2 = Question.create(answer: "b", level_id: new_user_level.id, note: JSON.unparse(["B3", "C#4", "D#4", "E4", "F#4", "G#4", "A#4", "B4"]), multipleChoice: JSON.unparse(arr))
+q3 = Question.create(answer: "b", level_id: new_user_level.id, note: JSON.unparse(["B2", "C#3", "D#3", "E3", "F#3", "G#3", "A#3", "B3"]), multipleChoice: JSON.unparse(arr))
+QuestionTag.create(tag_id: scales.id, question_id: q.id )
+QuestionTag.create(tag_id: scales.id, question_id: q2.id )
+QuestionTag.create(tag_id: scales.id, question_id: q3.id )
+QuestionTag.create(tag_id: major.id, question_id: q.id )
+QuestionTag.create(tag_id: major.id, question_id: q2.id )
+QuestionTag.create(tag_id: major.id, question_id: q3.id )
+
+qMvM = Question.create(answer: maj_ans, level_id: new_user_level.id, note: JSON.unparse(["A#2", "C3", "D3", "D#3", "F3", "G3", "A3", "A#3"]), multipleChoice: JSON.unparse(mvmanswers) )
+QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: major.id, question_id: qMvM.id )
+QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+
+#minor scales
+
+
+# #minor
+#i do not think this method is faster than the copy and paste method above unless a more dynamic 
+#way to make the data is written
+data = [
+    ["A",["A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5"]],
+    ["A",["A3", "B3", "C4", "D4", "E4", "F4", "G4", "A4"]],
+    ["A",["A2", "B2", "C3", "D3", "E3", "F3", "G3", "A3"]],
+    ["A#",["A#4", "B#4", "C#5", "D#5", "F5", "F#5", "G#5", "A#5"]], 
+    ["A#",["A#3", "B#3", "C#4", "D#4", "F4", "F#4", "G#4", "A#4"]], 
+    ["A#",["A#2", "B#2", "C#3", "D#3", "F3", "F#3", "G#3", "A#3"]], 
+    ["B",["B4", "C#5", "D5", "E5", "F#5", "G5", "A5", "B5"]],
+    ["B",["B3", "C#4", "D4", "E4", "F#4", "G4", "A4", "B4"]],
+    ["B",["B2", "C#3", "D3", "E3", "F#3", "G3", "A3", "B3"]],
+    ["C",["C4", "D4", "Eb4", "F4", "G4", "Ab4", "Bb4", "C5"]],
+    ["C",["C3", "D3", "Eb3", "F3", "G3", "Ab3", "Bb3", "C4"]],
+    ["C",["C2", "D2", "Eb2", "F2", "G2", "Ab2", "Bb2", "C3"]],
+    ["C#",["C#4", "D#4", "E4", "F#4", "G#4", "A4", "B4", "C#5"]],
+    ["C#",["C#3", "D#3", "E3", "F#3", "G#3", "A3", "B3", "C#4"]],
+    ["C#",["C#2", "D#2", "E2", "F#2", "G#2", "A2", "B2", "C#3"]],
+    ["D",["D4", "E4", "F4", "G4", "A4", "Bb4", "C5", "D5"]],
+    ["D",["D3", "E3", "F3", "G3", "A3", "Bb3", "C4", "D4"]],
+    ["D",["D2", "E2", "F2", "G2", "A2", "Bb2", "C3", "D3"]],
+    ["D#",["D#4", "F4", "F#4", "G#4", "A#4", "B4", "C#5", "D#5"]], 
+    ["D#",["D#3", "F3", "F#3", "G#3", "A#3", "B3", "C#4", "D#4"]],
+    ["D#",["D#2", "F2", "F#2", "G#2", "A#2", "B2", "C#3", "D#3"]],
+    ["E",["E4", "F#4", "G4", "A4", "B4", "C5", "D5", "E5"]],
+    ["E",["E3", "F#3", "G3", "A3", "B3", "C4", "D4", "E4"]],
+    ["E",["E2", "F#2", "G2", "A2", "B2", "C3", "D3", "E3"]],
+    ["F",["F4", "G4", "Ab4", "Bb4", "C5", "Db5", "Eb5", "F5"]],
+    ["F",["F3", "G3", "Ab3", "Bb3", "C4", "Db4", "Eb4", "F4"]],
+    ["F",["F2", "G2", "Ab2", "Bb2", "C3", "Db3", "Eb3", "F3"]],
+    ["F#",["F#4", "G#4", "A4", "B4", "C#5", "D5", "E5", "F#5"]],
+    ["F#",["F#3", "G#3", "A3", "B3", "C#4", "D4", "E4", "F#4"]], 
+    ["F#",["F#2", "G#2", "A2", "B2", "C#3", "D3", "E3", "F#3"]], 
+    ["G",["G4", "A4", "Bb4", "C5", "D5", "Eb5", "F5", "G5"]],
+    ["G",["G3", "A3", "Bb3", "C4", "D4", "Eb4", "F4", "G4"]],
+    ["G",["G2", "A2", "Bb2", "C3", "D3", "Eb3", "F3", "G3"]],
+    ["G#",["G#4", "A#4", "B4", "C#5", "D#5", "E5", "F#5", "G#5"]], 
+    ["G#",["G#3", "A#3", "B3", "C#4", "D#4", "E4", "F#4", "G#4"]],
+    ["G#",["G#2", "A#2", "B2", "C#3", "D#3", "E3", "F#3", "G#3"]]
+] 
+
+
+# def minor_scale_maker3000(scale)
+#     major_multi_scale = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"]
+#     arr = multipleSelector(major_multi_scale, scale[0], 4)
+
+#     q = Question.create(answer: scale[0], level_id: new_user_level.id, note: JSON.unparse(scale[1]), multipleChoice: JSON.unparse(arr))
+#     QuestionTag.create(tag_id: scales.id, question_id: q.id )
+#     QuestionTag.create(tag_id: minor.id, question_id: q.id )
+    
+
+#     qMvM = Question.create(answer: min_ans, level_id: new_user_level.id, note: JSON.unparse(scale[1]), multipleChoice: JSON.unparse(mvmanswers) )
+#     QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+#     QuestionTag.create(tag_id: minor.id, question_id: qMvM.id )
+#     QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+# end
+
+data.each do |scale| 
+    arr = multipleSelector(major_multi_scale, scale[0], 4)
+
+    q = Question.create(answer: scale[0], level_id: new_user_level.id, note: JSON.unparse(scale[1]), multipleChoice: JSON.unparse(arr))
+    QuestionTag.create(tag_id: scales.id, question_id: q.id )
+    QuestionTag.create(tag_id: minor.id, question_id: q.id )
+    
+
+    qMvM = Question.create(answer: min_ans, level_id: new_user_level.id, note: JSON.unparse(scale[1]), multipleChoice: JSON.unparse(mvmanswers) )
+    QuestionTag.create(tag_id: scales.id, question_id: qMvM.id )
+    QuestionTag.create(tag_id: minor.id, question_id: qMvM.id )
+    QuestionTag.create(tag_id: majorvsminor.id, question_id: qMvM.id )
+end
+
+#chord progressions
+
+data = [
+    [["D3", "F3", "A3", "c4"], ["G3", "B3", "D4", "f4"], ["c3", "e3", "g3", "b3"]]
+]
+
+pro_ans = ["1-4-5", "1-6-4-5", "2-5-1"]
+
+data.each do |progression|
+    q = Question.create(answer: "2-5-1", level_id: new_user_level.id, note: JSON.unparse(progression), multipleChoice: JSON.unparse(pro_ans))
+    QuestionTag.create(tag_id: pro.id, question_id: q.id )
+end
