@@ -19,19 +19,19 @@ beginner_level = Level.create(name: "beginner")
 intermediate_level = Level.create(name: "intermediate")
 advanced_level = Level.create(name: "advanced")
 
-user1 = User.create(username: "test", level_id: new_user_level.id, password: "test")
+user1 = User.create(username: "test", level_id: new_user_level.id, password: "test", points: 30)
 
 multi_note = ["a","b","c","d","e","f","g"]
 
 #universal tags
-multi_note.each {|note| Tag.create(name: note)}
-tag2 = Tag.create(name: "notes")
-tag3 = Tag.create(name: "chords")
-scales = Tag.create(name: "scales")
-major = Tag.create(name: "major")
-minor = Tag.create(name: "minor")
-majorvsminor = Tag.create(name: "major vs minor")
-pro = Tag.create(name: "progressions")
+multi_note.each {|note| Tag.create(name: note, tip: "Practice makes perfect. It is very hard to discern notes")}
+tag2 = Tag.create(name: "notes", tip: "Learn a couple notes and associate every other note the few learned")
+tag3 = Tag.create(name: "chords", tip: "Listen to the lowest note as a clue to the possible chord")
+scales = Tag.create(name: "scales", tip: "The first note is always a dead giveaway")
+major = Tag.create(name: "major", tip: "Third note in the scale will sound in sync with the first note")
+minor = Tag.create(name: "minor", tip: "Third note is flattened")
+majorvsminor = Tag.create(name: "major vs minor", tip: "Major sounds happier vs their minor counterparts")
+pro = Tag.create(name: "progressions", tip: "Try to listen to the resolution, it will hint to the possible type of progression")
 
 
 #question creation 

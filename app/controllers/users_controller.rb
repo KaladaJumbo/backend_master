@@ -39,7 +39,7 @@ class UsersController < ApplicationController
 
     def create
 
-        user = User.new(username: params[:username], password: params[:password], level_id: Level.find_by(name: "newUser").id)
+        user = User.new(username: params[:username], password: params[:password], level_id: Level.find_by(name: "newUser").id, points: 0)
         if user.save
             render json: {
                 auth: true,
